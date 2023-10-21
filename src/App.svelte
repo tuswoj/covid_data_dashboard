@@ -5,6 +5,7 @@
   import ErrorMessage from "./components/ErrorMessage.svelte";
   import { getData } from "./utils/get-data";
   import { covidData } from "./store/covidData";
+  import { cssVariables } from "./constants";
 
   let loading = false;
   let error = false;
@@ -19,13 +20,9 @@
       covidData.set(data);
     }
   });
-
-  covidData.subscribe((val) => {
-    console.log("data from store", val);
-  });
 </script>
 
-<div class="app">
+<div class="app" style={cssVariables}>
   {#if loading && !error}
     <Loader />
   {:else if error}
@@ -37,11 +34,10 @@
 
 <style>
   .app {
-    /* width: 100vw; */
-    /* height: 100vh; */
     display: flex;
+    flex-grow: 1;
     padding: 2rem;
-    /* justify-content: center; */
-    /* align-items: center; */
+    background-color: var(--dark-blue);
+    color: var(--butter-white);
   }
 </style>
