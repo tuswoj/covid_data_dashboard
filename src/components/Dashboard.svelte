@@ -1,11 +1,9 @@
 <script>
-  import { filtersStore } from "../store/filtersStore";
-  import { startDate } from "../store/startDate";
   import Filters from "./Filters.svelte";
 </script>
 
 <div class="dashboard-container">
-  <h1>Covid data: confirmed cases per country/region</h1>
+  <h1>Covid data dashboard: confirmed cases per country/region</h1>
 
   <Filters />
 </div>
