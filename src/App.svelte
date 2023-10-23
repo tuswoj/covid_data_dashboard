@@ -4,9 +4,8 @@
   import Dashboard from "./components/Dashboard.svelte";
   import ErrorMessage from "./components/ErrorMessage.svelte";
   import { getData } from "./utils/get-data";
-  import { covidData } from "./store/covidData";
   import { cssVariables } from "./constants";
-  import { countryNames } from "./store/countryNames";
+  import { covidData, countryNames } from "./store";
 
   let loading = false;
   let error = false;

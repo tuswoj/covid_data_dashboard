@@ -1,4 +1,4 @@
-import type { LineChartData } from "../types/chart-data";
+import type { LineChartData } from "../types";
 import type { CovidData } from "../types";
 
 import { derived, type Readable } from "svelte/store";

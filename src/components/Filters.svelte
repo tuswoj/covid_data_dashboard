@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { covidData } from "../store/covidData";
-  import { endDate } from "../store/endDate";
-  import { startDate } from "../store/startDate";
+  import { covidData, startDate, endDate } from "../store";
   import { extractDateRange } from "../utils";
   import CountrySelect from "./CountrySelect.svelte";
   import DateInput from "./DateInput.svelte";

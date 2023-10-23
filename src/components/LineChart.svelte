@@ -4,8 +4,8 @@
     Chart as ChartInstance,
     type ChartConfiguration,
   } from "chart.js/auto";
-  import { lineChartData } from "../store/lineChartData";
-  import type { LineChartData } from "../types/chart-data";
+  import { lineChartData } from "../store";
+  import type { LineChartData } from "../types";
   import { getLineChartConfig } from "../utils";
 
   let canvas: HTMLCanvasElement;

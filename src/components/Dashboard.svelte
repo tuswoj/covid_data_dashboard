@@ -1,6 +1,7 @@
 <script>
   import Filters from "./Filters.svelte";
   import LineChart from "./LineChart.svelte";
+  import Table from "./Table.svelte";
 </script>
 
 <div class="dashboard-container">
@@ -8,6 +9,7 @@
 
   <Filters />
   <LineChart />
+  <Table />
 </div>
 
 <style>

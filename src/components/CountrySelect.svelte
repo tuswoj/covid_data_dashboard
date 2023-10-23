@@ -1,8 +1,7 @@
 <script lang="ts">
   import Select from "svelte-select";
-  import { selectedCountry } from "../store/selectedCountry";
+  import { selectedCountry, countryNames } from "../store";
   import { butterWhite, grey, lightGrey } from "../constants";
-  import { countryNames } from "../store/countryNames";
 
   const onSelect = (event: CustomEvent): void => {
     let value = "";

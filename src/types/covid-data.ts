@@ -1,6 +1,6 @@
 export type CountryName = string;
 
-type NumberOfCases = number;
+export type NumberOfCases = number;
 
 export type CountryCases = Record<CountryName, NumberOfCases>;
 

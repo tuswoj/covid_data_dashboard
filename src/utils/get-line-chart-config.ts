@@ -1,5 +1,5 @@
 import type { ChartConfiguration } from "chart.js";
-import type { LineChartData } from "../types/chart-data";
+import type { LineChartData } from "../types";
 import { butterWhite } from "../constants";
 
 export function getLineChartConfig({
