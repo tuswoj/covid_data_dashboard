@@ -2,6 +2,6 @@ export type CountryName = string;
 
 type NumberOfCases = number;
 
-export type ConfirmedCases = Map<Date, NumberOfCases>;
+export type CountryCases = Record<CountryName, NumberOfCases>;
 
-export type CovidData = Record<CountryName, ConfirmedCases>;
+export type CovidData = Record<string, CountryCases>;

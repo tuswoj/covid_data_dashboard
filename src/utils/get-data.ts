@@ -1,10 +1,13 @@
 import { fetchCovidCSVData, parseRawData, transformParsedData } from ".";
 import { DATA_CACHE_KEY } from "../constants";
-import type { CovidData } from "../types";
+import type { CountryName, CovidData } from "../types";
+import { getCountryNames } from "./get-country-names";
 
-export async function getData(): Promise<
-  [data: CovidData | null, errorOccurred: boolean]
-> {
+export async function getData(): Promise<{
+  data: CovidData | null;
+  countryNames: CountryName[];
+  errorOccurred: boolean;
+}> {
   let rawData: string;
 
   const cachedQueryResult = localStorage.getItem(DATA_CACHE_KEY);
@@ -15,7 +18,7 @@ export async function getData(): Promise<
     const [fetchedRawData, errorOccurred] = await fetchCovidCSVData();
 
     if (errorOccurred && fetchedRawData === null) {
-      return [null, true];
+      return { errorOccurred: true, countryNames: [], data: null };
     } else {
       rawData = fetchedRawData as string;
       localStorage.setItem(DATA_CACHE_KEY, rawData);
@@ -23,7 +26,8 @@ export async function getData(): Promise<
   }
 
   const parsedData = parseRawData(rawData);
+  const countryNames = getCountryNames(parsedData);
   const covidData = transformParsedData(parsedData);
 
-  return [covidData, false];
+  return { errorOccurred: false, countryNames, data: covidData };
 }

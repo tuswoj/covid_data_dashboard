@@ -1,29 +1,44 @@
 <script lang="ts">
   import Select from "svelte-select";
-  import { covidData } from "../store/covidData";
-  import { selectedCountries } from "../store/selectedCountries";
+  import { selectedCountry } from "../store/selectedCountry";
   import { butterWhite, grey, lightGrey } from "../constants";
-
-  const countries = Object.keys($covidData);
+  import { countryNames } from "../store/countryNames";
 
   const onSelect = (event: CustomEvent): void => {
-    const selectedValues = (event.detail ?? []).map(
-      (selected: { value: string }) => selected.value
-    );
+    let value = "";
+    const eventDetail = event.detail;
 
-    selectedCountries.set(selectedValues);
+    if (eventDetail) {
+      value = eventDetail.value;
+    }
+
+    selectedCountry.set(value);
   };
 </script>
 
-<Select
-  items={countries}
-  multiple
-  closeListOnChange={false}
-  on:input={onSelect}
-  --background={grey}
-  --multi-item-bg={grey}
-  --list-background={grey}
-  --item-hover-bg={lightGrey}
-  --multi-item-clear-icon-color={butterWhite}
-  --clear-icon-color={butterWhite}
-/>
+<div class="select-container">
+  <label for="country-select">Country:</label>
+  <Select
+    id="country-select"
+    placeholder="Select country"
+    on:input={onSelect}
+    items={$countryNames}
+    --background={grey}
+    --clear-icon-color={butterWhite}
+    --font-size="1rem"
+    --item-hover-bg={lightGrey}
+    --list-background={grey}
+    --height="40px"
+    --width="200px"
+    --border="1px solid var(--butter-white)"
+    --border-radius="4px"
+  />
+</div>
+
+<style>
+  .select-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+</style>

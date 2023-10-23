@@ -1,4 +1,4 @@
-import type { Subscriber, Writable } from "svelte/store";
+import type { Writable } from "svelte/store";
 import type { CountryName } from ".";
 import type { Filters } from "./filters";
 

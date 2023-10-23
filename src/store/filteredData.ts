@@ -2,46 +2,98 @@ import { derived, type Writable } from "svelte/store";
 import { covidData } from "./covidData";
 import { startDate } from "./startDate";
 import { endDate } from "./endDate";
-import { selectedCountries } from "./selectedCountries";
-import type { CovidData } from "../types";
+import { selectedCountry } from "./selectedCountry";
+import type { CountryCases, CovidData } from "../types";
 
-function filterCovidDataByStartDate(
+type FilterType = "start" | "end";
+
+function filterCovidDataByDate(
   covidData: CovidData,
-  startDateStr: string
+  filterDateStr: string,
+  filterType: FilterType
 ): CovidData {
-  if (!startDateStr) {
+  if (!filterDateStr) {
     return covidData;
   }
 
-  const startDate = new Date(startDateStr);
+  const filterByStart = filterType === "start";
+  const filterByEnd = filterType === "end";
+
+  const filterDate = new Date(filterDateStr);
   const covidDataEntries = Object.entries(covidData);
 
-  covidDataEntries.reduce<CovidData>(
-    (filteredCovidData, [countryName, countryCases]) => {
-      for (const [date, cases] of countryCases.entries()) {
-        if (startDate.getTime() > date.getTime()) {
-          console.log(startDate > date);
-          countryCases.delete(date);
-        }
-      }
+  return covidDataEntries.reduce<CovidData>(
+    (filteredCovidData, [date, casesData]) => {
+      const currentDate = new Date(date);
 
-      filteredCovidData[countryName] = countryCases;
+      if (filterByStart && currentDate.getTime() >= filterDate.getTime()) {
+        filteredCovidData[date] = casesData;
+      } else if (filterByEnd && currentDate.getTime() <= filterDate.getTime()) {
+        filteredCovidData[date] = casesData;
+      }
 
       return filteredCovidData;
     },
     {}
   );
+}
 
-  console.log("end of filtering");
-  return {};
+function filterCovidDataByCountryName(
+  covidData: CovidData,
+  selectedCountry: string
+): CovidData {
+  if (!selectedCountry.length) {
+    return covidData;
+  }
+
+  const covidDataEntries = Object.entries(covidData);
+
+  return covidDataEntries.reduce<CovidData>(
+    (filteredCovidData, [date, casesData]) => {
+      const casesDataEntries = Object.entries(casesData);
+
+      const filteredCasesData = casesDataEntries.reduce<CountryCases>(
+        (acc, [countryName, cases]) => {
+          if (selectedCountry === countryName) {
+            acc[countryName] = cases;
+          }
+
+          return acc;
+        },
+        {}
+      );
+
+      filteredCovidData[date] = filteredCasesData;
+
+      return filteredCovidData;
+    },
+    {}
+  );
 }
 
 export const filteredCovidData = derived<
-  [Writable<CovidData>, Writable<string>, Writable<string>, Writable<string[]>],
+  [Writable<CovidData>, Writable<string>, Writable<string>, Writable<string>],
   CovidData
 >(
-  [covidData, startDate, endDate, selectedCountries],
-  ([$covidData, $startDate]) => {
-    return filterCovidDataByStartDate($covidData, $startDate);
+  [covidData, startDate, endDate, selectedCountry],
+  ([$covidData, $startDate, $endDate, $selectedCountry]) => {
+    const filteredByStartDate = (covidData: CovidData) =>
+      filterCovidDataByDate(covidData, $startDate, "start");
+
+    const filteredByEndDate = (covidData: CovidData) =>
+      filterCovidDataByDate(covidData, $endDate, "end");
+
+    const filteredByCountryName = (covidData: CovidData) =>
+      filterCovidDataByCountryName(covidData, $selectedCountry);
+
+    return [
+      filteredByStartDate,
+      filteredByEndDate,
+      filteredByCountryName,
+    ].reduce(
+      (filteredCovidData, currentFilterFunction) =>
+        currentFilterFunction(filteredCovidData),
+      $covidData
+    );
   }
 );

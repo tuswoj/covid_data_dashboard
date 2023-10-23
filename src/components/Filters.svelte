@@ -1,23 +1,25 @@
 <script lang="ts">
+  import { covidData } from "../store/covidData";
   import { endDate } from "../store/endDate";
-  import { selectedCountries } from "../store/selectedCountries";
   import { startDate } from "../store/startDate";
+  import { extractDateRange } from "../utils";
   import CountrySelect from "./CountrySelect.svelte";
   import DateInput from "./DateInput.svelte";
+
+  const [min, max] = extractDateRange($covidData);
 </script>
 
 <div class="filters-container">
-  <h2>Filter data</h2>
-
-  <DateInput label={"From:"} date={startDate} />
-  <DateInput label={"From:"} date={endDate} />
+  <DateInput label={"From:"} date={startDate} {min} {max} />
+  <DateInput label={"To:"} date={endDate} {min} {max} />
   <CountrySelect />
 </div>
 
 <style>
   .filters-container {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 2rem;
   }
 </style>
