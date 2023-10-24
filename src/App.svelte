@@ -5,7 +5,8 @@
   import ErrorMessage from "./components/ErrorMessage.svelte";
   import { getData } from "./utils/get-data";
   import { cssVariables } from "./constants";
-  import { covidData, countryNames } from "./store";
+  import { covidData, countryNames, startDate, endDate } from "./store";
+  import { convertDateFormat, extractDateRange } from "./utils";
 
   let loading = false;
   let error = false;
@@ -17,6 +18,10 @@
     error = errorOccurred;
 
     if (!errorOccurred && data !== null) {
+      const [minDate, maxDate] = extractDateRange(data);
+
+      startDate.set(convertDateFormat(minDate));
+      endDate.set(convertDateFormat(maxDate));
       covidData.set(data);
       countryNames.set(countries);
     }

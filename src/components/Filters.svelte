@@ -7,14 +7,22 @@
   const [min, max] = extractDateRange($covidData);
 </script>
 
-<div class="filters-container">
-  <DateInput label={"From:"} date={startDate} {min} {max} />
-  <DateInput label={"To:"} date={endDate} {min} {max} />
-  <CountrySelect />
-</div>
+<section class="filters-section">
+  <h3>Filter data:</h3>
+  <div class="filters">
+    <DateInput label={"From:"} date={startDate} {min} {max} />
+    <DateInput label={"To:"} date={endDate} {min} {max} />
+    <CountrySelect />
+  </div>
+</section>
 
 <style>
-  .filters-container {
+  .filters-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .filters {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
