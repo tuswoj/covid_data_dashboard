@@ -24,7 +24,6 @@
   "dependencies": {
     "chart.js": "^4.4.0",
     "papaparse": "^5.4.1",
-    "serve": "^14.2.1",
     "svelte-select": "^5.7.0"
   }
 }
