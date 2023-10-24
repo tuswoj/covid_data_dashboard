@@ -1,6 +1,6 @@
 # UI Covid Coding Challenge for Rill data
 
-This is a solution for Rill data recruitment task.
+Solution for Rill data recruitment task.
 
 ## How to run
 
