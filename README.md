@@ -29,3 +29,5 @@ I decided to go with `Vite` + `Svelte` + `TS` combination. I thought this is gre
 `chartjs` for line chart.
 
 `vitest` for unit tests.
+
+`svelte-select` for nice user experience when selecting country.
