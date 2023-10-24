@@ -13,17 +13,20 @@
 
   onMount(async () => {
     loading = true;
+
     const { data, errorOccurred, countryNames: countries } = await getData();
     loading = false;
     error = errorOccurred;
 
     if (!errorOccurred && data !== null) {
-      const [minDate, maxDate] = extractDateRange(data);
-
-      startDate.set(convertDateFormat(minDate));
-      endDate.set(convertDateFormat(maxDate));
+      // Init store values
       covidData.set(data);
       countryNames.set(countries);
+
+      // Get max and min date, and set those as default date range
+      const [minDate, maxDate] = extractDateRange(data);
+      startDate.set(convertDateFormat(minDate));
+      endDate.set(convertDateFormat(maxDate));
     }
   });
 </script>

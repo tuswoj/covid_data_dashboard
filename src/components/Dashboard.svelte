@@ -1,4 +1,6 @@
 <script>
+  import { testCovidData } from "../utils/tests/test-covid-data";
+  import { testParsedData } from "../utils/tests/test-parsed-data";
   import Filters from "./Filters.svelte";
   import LineChart from "./LineChart.svelte";
   import Table from "./Table/Table.svelte";

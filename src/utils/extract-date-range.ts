@@ -1,5 +1,10 @@
 import type { CovidData } from "../types";
 
+/**
+ * Sort entries from earliest to latest, and then return dates of first and last entry
+ * @param covidData
+ * @returns Min and max date found in provided covid data
+ */
 export function extractDateRange(
   covidData: CovidData
 ): [min: string, max: string] {
@@ -14,8 +19,9 @@ export function extractDateRange(
     }
   );
 
-  const minDate = sortedCovidDateStrings[0];
-  const maxDate = sortedCovidDateStrings[sortedCovidDateStrings.length - 1];
+  const minDate = sortedCovidDateStrings[0] ?? "";
+  const maxDate =
+    sortedCovidDateStrings[sortedCovidDateStrings.length - 1] ?? "";
 
   return [minDate, maxDate];
 }
