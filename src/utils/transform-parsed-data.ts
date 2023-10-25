@@ -1,3 +1,4 @@
+import { nonCountryDataEntires } from "../constants";
 import { CovidDataHeaders, type CovidData, type ParsedData } from "../types";
 
 const { ProvinceOrState, CountryOrRegion, Lat, Long } = CovidDataHeaders;
@@ -19,7 +20,11 @@ const covidDataHeaders: string[] = [
 export function transformParsedData(parsedData: ParsedData[]): CovidData {
   const covidData = parsedData.reduce<CovidData>((accumulatedData, current) => {
     const countryOrRegion = current[CountryOrRegion];
-    if (!countryOrRegion) {
+
+    if (
+      countryOrRegion === undefined ||
+      nonCountryDataEntires.includes(countryOrRegion)
+    ) {
       return accumulatedData;
     }
 

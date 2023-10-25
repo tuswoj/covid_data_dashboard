@@ -18,3 +18,11 @@ export const cssVariables = `
   ${CSSVariables.LightGrey}: ${lightGrey};
   ${CSSVariables.ButterWhite}: ${butterWhite}
 `;
+
+export const nonCountryDataEntires = [
+  "Diamond Princess",
+  "MS Zaandam",
+  "Summer Olympics 2020",
+  "Winter",
+  "Winter Olympics 2022",
+];
